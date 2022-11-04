@@ -20,49 +20,32 @@ pageextension 50102 "General Journal Ext" extends "General Journal"
     actions
     {
         // Add changes to page actions here
-        addafter("F&unctions")
+        addafter(Post)
         {
-            action(PostTask)
+            action(PostTest)
             {
-                ApplicationArea = All;
-                Caption = 'Post Task';
-                Image = PostDocument;
+                ApplicationArea = Basic, Suite;
+                Caption = 'Post Test';
+                Image = PostOrder;
                 Promoted = true;
-                PromotedCategory = Process;
-                // PromotedIsBig = true;
-                ToolTip = 'Posting with Voucher No and Type';
+                PromotedCategory = Category9;
+                PromotedIsBig = true;
+                ShortCutKey = 'F9';
+                ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
 
                 trigger OnAction()
-                var
                 begin
-                    //
+                    Rec.SendToPosting(Codeunit::"Gen. Jnl.-Post");
+                    // CurrentJnlBatchName := GetRangeMax("Journal Batch Name");
+                    // if IsSimplePage then
+                    //     if GeneralLedgerSetup."Post with Job Queue" then
+                    //         NewDocumentNo()
+                    //     else
+                    //         SetDataForSimpleModeOnPost;
+                    // SetJobQueueVisibility();
+                    CurrPage.Update(false);
                 end;
             }
         }
     }
 }
-
-// action(Post)
-//                 {
-//                     ApplicationArea = Basic, Suite;
-//                     Caption = 'P&ost';
-//                     Image = PostOrder;
-//                     Promoted = true;
-//                     PromotedCategory = Category9;
-//                     PromotedIsBig = true;
-//                     ShortCutKey = 'F9';
-//                     ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
-
-//                     trigger OnAction()
-//                     begin
-//                         SendToPosting(Codeunit::"Gen. Jnl.-Post");
-//                         CurrentJnlBatchName := GetRangeMax("Journal Batch Name");
-//                         if IsSimplePage then
-//                             if GeneralLedgerSetup."Post with Job Queue" then
-//                                 NewDocumentNo()
-//                             else
-//                                 SetDataForSimpleModeOnPost;
-//                         SetJobQueueVisibility();
-//                         CurrPage.Update(false);
-//                     end;
-//                 }
